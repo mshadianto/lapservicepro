@@ -1,6 +1,7 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Sidebar from "./components/Sidebar";
+import LandingPage from "./pages/LandingPage";
 import DashboardPage from "./pages/DashboardPage";
 import OrdersPage from "./pages/OrdersPage";
 import NewOrderPage from "./pages/NewOrderPage";
@@ -13,6 +14,7 @@ import { useOrders } from "./hooks/useOrders";
 import { colors } from "./styles/theme";
 
 export default function App() {
+  const [view, setView] = useState("landing");
   const [active, setActive] = useState("dashboard");
   const { orders, addOrder, updateStatus } = useOrders();
 
@@ -20,6 +22,16 @@ export default function App() {
     () => orders.filter((o) => !["selesai", "dibatalkan"].includes(o.status)).length,
     [orders]
   );
+
+  const enterApp = useCallback(() => setView("app"), []);
+
+  if (view === "landing") {
+    return (
+      <ErrorBoundary>
+        <LandingPage onEnterApp={enterApp} />
+      </ErrorBoundary>
+    );
+  }
 
   const page = (() => {
     switch (active) {

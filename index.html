@@ -2,15 +2,101 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>LapServ Pro — Service Management</title>
+    <meta name="description" content="Aplikasi manajemen service laptop profesional. Diagnosa AI, tracking real-time, inventori spare part, invoice digital." />
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#0f172a" />
+
+    <!-- iOS PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="LapServ Pro" />
+    <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="icons/icon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+
+    <!-- Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
+
+    <style>
+      /* Mobile-friendly base */
+      * { -webkit-tap-highlight-color: transparent; }
+      body { margin: 0; overscroll-behavior: none; }
+
+      /* Splash screen while loading */
+      #splash {
+        position: fixed; inset: 0; z-index: 9999;
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+        transition: opacity 0.3s;
+      }
+      #splash.hide { opacity: 0; pointer-events: none; }
+      #splash-icon {
+        width: 64px; height: 64px; border-radius: 14px;
+        background: linear-gradient(135deg, #22d3ee, #3b82f6);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 32px; margin-bottom: 16px;
+        box-shadow: 0 8px 30px rgba(34,211,238,0.3);
+      }
+      #splash-text {
+        color: #f1f5f9; font-family: 'Outfit', sans-serif;
+        font-weight: 800; font-size: 20px; letter-spacing: -0.02em;
+      }
+      #splash-sub {
+        color: #64748b; font-family: 'DM Sans', sans-serif;
+        font-size: 12px; margin-top: 4px;
+      }
+      @keyframes pulse-icon {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+      }
+      #splash-icon { animation: pulse-icon 1.5s ease-in-out infinite; }
+    </style>
   </head>
-  <body style="margin: 0">
+  <body>
+    <!-- Splash screen -->
+    <div id="splash">
+      <div id="splash-icon">💻</div>
+      <div id="splash-text">LapServ Pro</div>
+      <div id="splash-sub">Memuat aplikasi...</div>
+    </div>
+
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+
+    <script>
+      // Hide splash when app renders
+      window.addEventListener("DOMContentLoaded", () => {
+        const observer = new MutationObserver(() => {
+          const root = document.getElementById("root");
+          if (root && root.children.length > 0) {
+            const splash = document.getElementById("splash");
+            if (splash) {
+              splash.classList.add("hide");
+              setTimeout(() => splash.remove(), 300);
+            }
+            observer.disconnect();
+          }
+        });
+        observer.observe(document.getElementById("root"), { childList: true });
+      });
+
+      // Register service worker
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("sw.js", { scope: "/lapservicepro/" })
+            .catch(() => {});
+        });
+      }
+    </script>
   </body>
 </html>

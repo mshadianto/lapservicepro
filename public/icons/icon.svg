@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22d3ee"/>
+      <stop offset="100%" style="stop-color:#3b82f6"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <!-- Laptop body -->
+  <rect x="116" y="148" width="280" height="188" rx="16" fill="#0f172a" stroke="#f8fafc" stroke-width="6"/>
+  <!-- Screen -->
+  <rect x="136" y="168" width="240" height="148" rx="8" fill="#1e293b"/>
+  <!-- Screen content bars -->
+  <rect x="160" y="196" width="80" height="8" rx="4" fill="#22d3ee" opacity="0.9"/>
+  <rect x="160" y="216" width="120" height="6" rx="3" fill="#64748b" opacity="0.5"/>
+  <rect x="160" y="232" width="100" height="6" rx="3" fill="#64748b" opacity="0.4"/>
+  <rect x="160" y="256" width="60" height="20" rx="6" fill="#3b82f6" opacity="0.8"/>
+  <!-- Checkmark on screen -->
+  <circle cx="320" cy="240" r="24" fill="#10b981" opacity="0.9"/>
+  <polyline points="308,240 316,250 334,230" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Laptop base -->
+  <path d="M96 340 L116 336 L396 336 L416 340 L416 356 C416 368 406 376 396 376 L116 376 C106 376 96 368 96 356 Z" fill="#0f172a" stroke="#f8fafc" stroke-width="4"/>
+  <!-- Touchpad -->
+  <rect x="226" y="348" width="60" height="16" rx="4" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+  <!-- Wrench icon bottom-right -->
+  <g transform="translate(370, 390) scale(0.55)">
+    <path d="M20 80 L80 20 C90 10 105 10 115 20 L120 25 C130 35 130 50 120 60 L60 120 C50 130 35 130 25 120 L20 115 C10 105 10 90 20 80 Z" fill="#f59e0b" stroke="#0f172a" stroke-width="4"/>
+  </g>
+</svg>

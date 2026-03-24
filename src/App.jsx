@@ -11,11 +11,61 @@ import TechniciansPage from "./pages/TechniciansPage";
 import InvoicePage from "./pages/InvoicePage";
 import ReportPage from "./pages/ReportPage";
 import { useOrders } from "./hooks/useOrders";
-import { colors } from "./styles/theme";
+import { colors, fonts } from "./styles/theme";
+
+const responsiveStyles = `
+  @media (max-width: 768px) {
+    .sidebar {
+      position: fixed !important;
+      top: 0; left: 0; bottom: 0;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+    .sidebar-open {
+      transform: translateX(0) !important;
+    }
+    .sidebar-overlay {
+      display: block !important;
+    }
+    .app-main {
+      padding: 16px !important;
+      padding-top: 68px !important;
+      max-height: none !important;
+    }
+    .mobile-header {
+      display: flex !important;
+    }
+  }
+`;
+
+function MobileHeader({ onMenuOpen }) {
+  return (
+    <div className="mobile-header" style={{
+      display: "none", position: "fixed", top: 0, left: 0, right: 0, zIndex: 997,
+      height: 56, padding: "0 16px", alignItems: "center", gap: 12,
+      background: "rgba(15,23,42,0.95)", backdropFilter: "blur(12px)",
+      borderBottom: "1px solid rgba(255,255,255,0.06)",
+    }}>
+      <button onClick={onMenuOpen} style={{
+        background: "none", border: "none", cursor: "pointer", padding: 6,
+        color: colors.slate300, fontSize: 22, lineHeight: 1,
+      }}>{"\u2630"}</button>
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <div style={{
+          width: 30, height: 30, borderRadius: 7,
+          background: `linear-gradient(135deg, ${colors.cyan400}, ${colors.blue500})`,
+          display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14,
+        }}>{"\uD83D\uDCBB"}</div>
+        <span style={{ color: colors.slate100, fontWeight: 800, fontSize: 14, fontFamily: fonts.heading }}>LapServ Pro</span>
+      </div>
+    </div>
+  );
+}
 
 export default function App() {
   const [view, setView] = useState("landing");
   const [active, setActive] = useState("dashboard");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { orders, addOrder, updateStatus } = useOrders();
 
   const pendingCount = useMemo(
@@ -24,6 +74,7 @@ export default function App() {
   );
 
   const enterApp = useCallback(() => setView("app"), []);
+  const closeSidebar = useCallback(() => setSidebarOpen(false), []);
 
   if (view === "landing") {
     return (
@@ -57,11 +108,21 @@ export default function App() {
   })();
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh", background: colors.slate100, fontFamily: "'DM Sans', sans-serif" }}>
-      <Sidebar active={active} setActive={setActive} pendingCount={pendingCount} />
-      <main style={{ flex: 1, padding: "28px 32px", overflowY: "auto", maxHeight: "100vh" }}>
-        <ErrorBoundary>{page}</ErrorBoundary>
-      </main>
-    </div>
+    <>
+      <style>{responsiveStyles}</style>
+      <MobileHeader onMenuOpen={() => setSidebarOpen(true)} />
+      <div style={{ display: "flex", minHeight: "100vh", background: colors.slate100, fontFamily: "'DM Sans', sans-serif" }}>
+        <Sidebar
+          active={active}
+          setActive={setActive}
+          pendingCount={pendingCount}
+          mobileOpen={sidebarOpen}
+          onClose={closeSidebar}
+        />
+        <main className="app-main" style={{ flex: 1, padding: "28px 32px", overflowY: "auto", maxHeight: "100vh" }}>
+          <ErrorBoundary>{page}</ErrorBoundary>
+        </main>
+      </div>
+    </>
   );
 }

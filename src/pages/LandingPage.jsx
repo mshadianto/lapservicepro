@@ -88,7 +88,7 @@ export default function LandingPage({ onEnterApp }) {
           }}>{"\uD83D\uDCBB"}</div>
           <span style={{ fontFamily: fonts.heading, fontWeight: 800, fontSize: 18, letterSpacing: "-0.02em" }}>LapServ Pro</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
+        <div className="landing-nav-links" style={{ display: "flex", alignItems: "center", gap: 28 }}>
           {["Layanan", "Teknisi", "Testimoni"].map((item) => (
             <a key={item} href={`#${item.toLowerCase()}`} style={{
               color: colors.slate400, fontSize: 13.5, textDecoration: "none",
@@ -123,7 +123,7 @@ export default function LandingPage({ onEnterApp }) {
           filter: "blur(40px)", pointerEvents: "none",
         }} />
 
-        <div style={{ textAlign: "center", maxWidth: 800, position: "relative", zIndex: 1 }}>
+        <div className="landing-hero" style={{ textAlign: "center", maxWidth: 800, position: "relative", zIndex: 1 }}>
           <div style={{
             display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 16px",
             borderRadius: 20, background: "rgba(34,211,238,0.1)", border: "1px solid rgba(34,211,238,0.2)",
@@ -155,7 +155,7 @@ export default function LandingPage({ onEnterApp }) {
             Dari kerusakan ringan hingga berat — kami tangani semua.
           </p>
 
-          <div style={{ display: "flex", gap: 14, justifyContent: "center", marginBottom: 56 }}>
+          <div className="landing-hero-btns" style={{ display: "flex", gap: 14, justifyContent: "center", marginBottom: 56 }}>
             <button onClick={onEnterApp} style={{
               padding: "14px 32px", borderRadius: 12, border: "none", cursor: "pointer",
               background: `linear-gradient(135deg, ${colors.cyan400}, ${colors.blue500})`,
@@ -170,7 +170,7 @@ export default function LandingPage({ onEnterApp }) {
             }}>Lihat Layanan {"\u2193"}</a>
           </div>
 
-          <div style={{ display: "flex", gap: 0, justifyContent: "center" }}>
+          <div className="landing-hero-stats" style={{ display: "flex", gap: 0, justifyContent: "center" }}>
             {HERO_STATS.map((s, i) => (
               <div key={i} style={{
                 padding: "20px 36px", textAlign: "center",
@@ -191,7 +191,7 @@ export default function LandingPage({ onEnterApp }) {
       </section>
 
       {/* ── LAYANAN ── */}
-      <section id="layanan" style={{
+      <section id="layanan" className="landing-section" style={{
         padding: "100px 40px", position: "relative",
         background: `linear-gradient(180deg, ${colors.slate900} 0%, #0c1222 100%)`,
       }}>
@@ -201,7 +201,7 @@ export default function LandingPage({ onEnterApp }) {
               fontSize: 12, fontWeight: 700, color: colors.cyan400, letterSpacing: "0.1em",
               textTransform: "uppercase", marginBottom: 12, fontFamily: fonts.mono,
             }}>LAYANAN KAMI</div>
-            <h2 style={{ fontSize: 36, fontWeight: 800, fontFamily: fonts.heading, margin: "0 0 12px", letterSpacing: "-0.03em" }}>
+            <h2 className="landing-section-title" style={{ fontSize: 36, fontWeight: 800, fontFamily: fonts.heading, margin: "0 0 12px", letterSpacing: "-0.03em" }}>
               Service Lengkap untuk Laptop Anda
             </h2>
             <p style={{ fontSize: 15, color: colors.slate400, maxWidth: 500, margin: "0 auto" }}>
@@ -209,7 +209,7 @@ export default function LandingPage({ onEnterApp }) {
             </p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 16 }}>
+          <div className="landing-grid-2" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 16 }}>
             {SERVICE_TYPES.map((s, i) => (
               <div
                 key={s.id}
@@ -238,7 +238,7 @@ export default function LandingPage({ onEnterApp }) {
       </section>
 
       {/* ── FEATURES ── */}
-      <section style={{
+      <section className="landing-section" style={{
         padding: "100px 40px",
         background: `linear-gradient(180deg, #0c1222 0%, ${colors.slate900} 100%)`,
       }}>
@@ -248,12 +248,12 @@ export default function LandingPage({ onEnterApp }) {
               fontSize: 12, fontWeight: 700, color: colors.blue500, letterSpacing: "0.1em",
               textTransform: "uppercase", marginBottom: 12, fontFamily: fonts.mono,
             }}>KENAPA KAMI</div>
-            <h2 style={{ fontSize: 36, fontWeight: 800, fontFamily: fonts.heading, margin: "0 0 12px", letterSpacing: "-0.03em" }}>
+            <h2 className="landing-section-title" style={{ fontSize: 36, fontWeight: 800, fontFamily: fonts.heading, margin: "0 0 12px", letterSpacing: "-0.03em" }}>
               Fitur yang Membedakan Kami
             </h2>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+          <div className="landing-grid-3" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
             {FEATURES.map((f, i) => (
               <div key={i} style={{
                 padding: "30px 26px", borderRadius: 16,
@@ -275,7 +275,7 @@ export default function LandingPage({ onEnterApp }) {
       </section>
 
       {/* ── TEKNISI ── */}
-      <section id="teknisi" style={{
+      <section id="teknisi" className="landing-section" style={{
         padding: "100px 40px",
         background: `radial-gradient(ellipse at 50% 0%, rgba(34,211,238,0.04) 0%, transparent 60%), ${colors.slate900}`,
       }}>
@@ -285,12 +285,12 @@ export default function LandingPage({ onEnterApp }) {
               fontSize: 12, fontWeight: 700, color: colors.cyan400, letterSpacing: "0.1em",
               textTransform: "uppercase", marginBottom: 12, fontFamily: fonts.mono,
             }}>TIM KAMI</div>
-            <h2 style={{ fontSize: 36, fontWeight: 800, fontFamily: fonts.heading, margin: 0, letterSpacing: "-0.03em" }}>
+            <h2 className="landing-section-title" style={{ fontSize: 36, fontWeight: 800, fontFamily: fonts.heading, margin: 0, letterSpacing: "-0.03em" }}>
               Teknisi Berpengalaman
             </h2>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+          <div className="landing-grid-3" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
             {TECHNICIANS.map((t) => (
               <div key={t.id} style={{
                 padding: 28, borderRadius: 16, textAlign: "center",
@@ -322,7 +322,7 @@ export default function LandingPage({ onEnterApp }) {
       </section>
 
       {/* ── TESTIMONI ── */}
-      <section id="testimoni" style={{
+      <section id="testimoni" className="landing-section" style={{
         padding: "100px 40px",
         background: `linear-gradient(180deg, ${colors.slate900} 0%, #0c1222 100%)`,
       }}>
@@ -332,12 +332,12 @@ export default function LandingPage({ onEnterApp }) {
               fontSize: 12, fontWeight: 700, color: colors.blue500, letterSpacing: "0.1em",
               textTransform: "uppercase", marginBottom: 12, fontFamily: fonts.mono,
             }}>TESTIMONI</div>
-            <h2 style={{ fontSize: 36, fontWeight: 800, fontFamily: fonts.heading, margin: 0, letterSpacing: "-0.03em" }}>
+            <h2 className="landing-section-title" style={{ fontSize: 36, fontWeight: 800, fontFamily: fonts.heading, margin: 0, letterSpacing: "-0.03em" }}>
               Apa Kata Pelanggan
             </h2>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+          <div className="landing-grid-3" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
             {TESTIMONIALS.map((t, i) => (
               <div key={i} style={{
                 padding: "28px 24px", borderRadius: 16,
@@ -362,8 +362,8 @@ export default function LandingPage({ onEnterApp }) {
       </section>
 
       {/* ── CTA ── */}
-      <section style={{ padding: "80px 40px", textAlign: "center" }}>
-        <div style={{
+      <section className="landing-section" style={{ padding: "80px 40px", textAlign: "center" }}>
+        <div className="landing-cta-box" style={{
           maxWidth: 700, margin: "0 auto", padding: "56px 40px", borderRadius: 24,
           background: `linear-gradient(135deg, rgba(34,211,238,0.08), rgba(59,130,246,0.08))`,
           border: "1px solid rgba(34,211,238,0.15)",
@@ -384,7 +384,7 @@ export default function LandingPage({ onEnterApp }) {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer style={{
+      <footer className="landing-footer" style={{
         padding: "32px 40px", borderTop: `1px solid ${colors.slate800}`,
         display: "flex", justifyContent: "space-between", alignItems: "center",
       }}>
@@ -404,6 +404,22 @@ export default function LandingPage({ onEnterApp }) {
         }
         html { scroll-behavior: smooth; }
         a:hover { color: ${colors.slate200} !important; }
+
+        @media (max-width: 768px) {
+          .landing-hero h1 { font-size: 32px !important; }
+          .landing-hero p { font-size: 15px !important; }
+          .landing-hero-stats { flex-wrap: wrap !important; }
+          .landing-hero-stats > div { border-right: none !important; padding: 12px 20px !important; }
+          .landing-hero-btns { flex-direction: column !important; align-items: center !important; }
+          .landing-section { padding: 60px 20px !important; }
+          .landing-grid-3 { grid-template-columns: 1fr !important; }
+          .landing-grid-2 { grid-template-columns: 1fr !important; }
+          .landing-nav-links { display: none !important; }
+          .landing-cta-box { padding: 36px 20px !important; }
+          .landing-cta-box h2 { font-size: 24px !important; }
+          .landing-footer { flex-direction: column !important; gap: 8px !important; text-align: center !important; }
+          .landing-section-title { font-size: 28px !important; }
+        }
       `}</style>
     </div>
   );

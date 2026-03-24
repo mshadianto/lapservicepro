@@ -1,6 +1,7 @@
 import { useState, useMemo, useCallback } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Sidebar from "./components/Sidebar";
+import LockedSection from "./components/LockedSection";
 import LandingPage from "./pages/LandingPage";
 import DashboardPage from "./pages/DashboardPage";
 import OrdersPage from "./pages/OrdersPage";
@@ -10,7 +11,10 @@ import PartsPage from "./pages/PartsPage";
 import TechniciansPage from "./pages/TechniciansPage";
 import InvoicePage from "./pages/InvoicePage";
 import ReportPage from "./pages/ReportPage";
+import MarketplacePage from "./pages/MarketplacePage";
+import FinancePage from "./pages/FinancePage";
 import { useOrders } from "./hooks/useOrders";
+import { SubscriptionProvider } from "./hooks/useSubscription";
 import { colors, fonts } from "./styles/theme";
 
 const responsiveStyles = `
@@ -62,7 +66,7 @@ function MobileHeader({ onMenuOpen }) {
   );
 }
 
-export default function App() {
+function AppInner() {
   const [view, setView] = useState("landing");
   const [active, setActive] = useState("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -96,8 +100,12 @@ export default function App() {
         return <PredictPage />;
       case "parts":
         return <PartsPage />;
+      case "marketplace":
+        return <MarketplacePage />;
+      case "finance":
+        return <LockedSection feature="finance_report" requiredPlan="pro"><FinancePage orders={orders} /></LockedSection>;
       case "technicians":
-        return <TechniciansPage />;
+        return <LockedSection feature="ai_diagnosis_full" requiredPlan="pro"><TechniciansPage /></LockedSection>;
       case "invoice":
         return <InvoicePage orders={orders} />;
       case "report":
@@ -124,5 +132,13 @@ export default function App() {
         </main>
       </div>
     </>
+  );
+}
+
+export default function App() {
+  return (
+    <SubscriptionProvider>
+      <AppInner />
+    </SubscriptionProvider>
   );
 }

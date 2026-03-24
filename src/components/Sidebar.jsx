@@ -1,5 +1,7 @@
 import { useSubscription } from "../hooks/useSubscription";
+import { useAuth } from "../hooks/useAuth";
 import { PLANS } from "../data/subscription";
+import { ROLE_LABELS } from "../data/users";
 import { fonts, colors } from "../styles/theme";
 
 const NAV_ITEMS = [
@@ -14,6 +16,35 @@ const NAV_ITEMS = [
   { key: "invoice", icon: "\uD83E\uDDFE", label: "Invoice" },
   { key: "report", icon: "\uD83D\uDCC8", label: "Laporan" },
 ];
+
+function UserProfile() {
+  const { user, logout } = useAuth();
+  const { plan } = useSubscription();
+  const p = PLANS[plan];
+  if (!user) return null;
+
+  return (
+    <div style={{ padding: "12px 14px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+        <div style={{
+          width: 36, height: 36, borderRadius: "50%",
+          background: `linear-gradient(135deg, ${p.color}, ${p.color}88)`,
+          display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18,
+        }}>{user.avatar}</div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: 12.5, fontWeight: 600, color: colors.slate200, fontFamily: fonts.body, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{user.name}</div>
+          <div style={{ fontSize: 10, color: colors.slate500, fontFamily: fonts.body }}>{ROLE_LABELS[user.role]}</div>
+        </div>
+      </div>
+      <button onClick={logout} style={{
+        width: "100%", padding: "6px 0", borderRadius: 7,
+        border: "1px solid rgba(239,68,68,0.3)", background: "rgba(239,68,68,0.08)",
+        color: "#f87171", fontSize: 11, fontWeight: 600, cursor: "pointer",
+        fontFamily: fonts.body, transition: "all 0.15s",
+      }}>Logout</button>
+    </div>
+  );
+}
 
 export default function Sidebar({ active, setActive, pendingCount, mobileOpen, onClose }) {
   const { plan } = useSubscription();
@@ -76,8 +107,11 @@ export default function Sidebar({ active, setActive, pendingCount, mobileOpen, o
           })}
         </nav>
 
+        {/* User Profile */}
+        <UserProfile />
+
         <div style={{
-          padding: "16px 20px", borderTop: "1px solid rgba(255,255,255,0.06)",
+          padding: "12px 20px", borderTop: "1px solid rgba(255,255,255,0.06)",
           color: colors.slate600, fontSize: 10, fontFamily: fonts.body, textAlign: "center",
         }}>
           &copy; {new Date().getFullYear()} LapServ Pro {"\u00D7"} Enterkomputer

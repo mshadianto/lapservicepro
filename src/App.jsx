@@ -3,6 +3,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import Sidebar from "./components/Sidebar";
 import LockedSection from "./components/LockedSection";
 import LandingPage from "./pages/LandingPage";
+import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import OrdersPage from "./pages/OrdersPage";
 import NewOrderPage from "./pages/NewOrderPage";
@@ -14,7 +15,8 @@ import ReportPage from "./pages/ReportPage";
 import MarketplacePage from "./pages/MarketplacePage";
 import FinancePage from "./pages/FinancePage";
 import { useOrders } from "./hooks/useOrders";
-import { SubscriptionProvider } from "./hooks/useSubscription";
+import { SubscriptionProvider, useSubscription } from "./hooks/useSubscription";
+import { AuthProvider, useAuth } from "./hooks/useAuth";
 import { colors, fonts } from "./styles/theme";
 
 const responsiveStyles = `
@@ -71,19 +73,39 @@ function AppInner() {
   const [active, setActive] = useState("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { orders, addOrder, updateStatus } = useOrders();
+  const { isLoggedIn, logout } = useAuth();
+  const { setPlan } = useSubscription();
 
   const pendingCount = useMemo(
     () => orders.filter((o) => !["selesai", "dibatalkan"].includes(o.status)).length,
     [orders]
   );
 
-  const enterApp = useCallback(() => setView("app"), []);
+  const enterApp = useCallback(() => setView("login"), []);
   const closeSidebar = useCallback(() => setSidebarOpen(false), []);
+
+  const handleLoginSuccess = useCallback((user) => {
+    setPlan(user.plan);
+    setView("app");
+  }, [setPlan]);
+
+  // Logout → back to landing
+  if (view === "app" && !isLoggedIn) {
+    setView("landing");
+  }
 
   if (view === "landing") {
     return (
       <ErrorBoundary>
         <LandingPage onEnterApp={enterApp} />
+      </ErrorBoundary>
+    );
+  }
+
+  if (view === "login" && !isLoggedIn) {
+    return (
+      <ErrorBoundary>
+        <LoginPage onLoginSuccess={handleLoginSuccess} />
       </ErrorBoundary>
     );
   }
@@ -137,8 +159,10 @@ function AppInner() {
 
 export default function App() {
   return (
-    <SubscriptionProvider>
-      <AppInner />
-    </SubscriptionProvider>
+    <AuthProvider>
+      <SubscriptionProvider>
+        <AppInner />
+      </SubscriptionProvider>
+    </AuthProvider>
   );
 }
